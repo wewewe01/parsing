@@ -1,3 +1,6 @@
+#!/bin/bash
+
+
 # Открыть фейковый порт, чтобы Render "успокоился"
 python3 -m http.server 8080 &
 
