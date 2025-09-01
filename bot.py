@@ -5,7 +5,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from flask import Flask, request
 
-TOKEN = "8280789059:AAFokQ50dVGBTUOiY6DTY9zrRzbbvco7Iz4"
+TOKEN = "280789059:AAFokQ50dVGBTUOiY6DTY9zrRzbbvco7Iz4"
 
 app = Flask(__name__)
 application = Application.builder().token(TOKEN).build()
@@ -94,3 +94,4 @@ if __name__ == "__main__":
     
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
+
