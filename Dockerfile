@@ -1,4 +1,4 @@
-\FROM python:3.10-slim
+FROM python:3.10-slim
 
 # Установка системных зависимостей
 RUN apt-get update && apt-get install -y \
@@ -30,3 +30,4 @@ RUN chmod +x start.sh
 
 # Запуск
 CMD ["./start.sh"]
+
