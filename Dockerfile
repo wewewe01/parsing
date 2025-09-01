@@ -1,5 +1,13 @@
 FROM python:3.10-slim
 
+RUN pip install webdriver-manager==3.8.5
+RUN python - << 'EOF'
+from webdriver_manager.chrome import ChromeDriverManager
+from os import environ
+print(ChromeDriverManager().install())
+EOF
+
+
 # 1. Установка системных зависимостей
 RUN apt-get update && apt-get install -y \
     wget curl unzip gnupg2 lsb-release fonts-liberation \
@@ -34,3 +42,4 @@ RUN chmod +x start.sh
 
 # 7. Команда запуска
 CMD ["./start.sh"]
+
