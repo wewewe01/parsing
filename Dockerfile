@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+\FROM python:3.10-slim
 
 # Установка системных зависимостей
 RUN apt-get update && apt-get install -y \
@@ -9,25 +9,24 @@ RUN apt-get update && apt-get install -y \
 
 # Установка Google Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt-get update && apt-get install -y ./google-chrome-stable_current_amd64.deb && \
+    apt install -y ./google-chrome-stable_current_amd64.deb && \
     rm google-chrome-stable_current_amd64.deb
 
-# Установка ChromeDriver
-RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d. -f1) && \
-    DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION") && \
-    wget -O chromedriver.zip "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip" && \
+# Установка ChromeDriver (фиксированная версия под Chrome 122, например)
+RUN CHROMEDRIVER_VERSION=$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget -O chromedriver.zip https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip && \
     unzip chromedriver.zip && \
-    mv chromedriver /usr/local/bin/ && \
+    mv chromedriver /usr/local/bin/chromedriver && \
     chmod +x /usr/local/bin/chromedriver && \
     rm chromedriver.zip
 
-# Установка зависимостей Python
+# Установка Python-зависимостей
 WORKDIR /app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Разрешаем запуск скрипта
+# Разрешаем запуск start.sh
 RUN chmod +x start.sh
 
-# Запуск бота
+# Запуск
 CMD ["./start.sh"]
